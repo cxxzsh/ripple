@@ -3,6 +3,8 @@
 
 #pragma once
 
-#include <ripple/derived.hpp>
-#include <ripple/lifetime.hpp>
-#include <ripple/variable.hpp>
+#include <ripple/batch.hpp>
+#include <ripple/computed.hpp>
+#include <ripple/effect.hpp>
+#include <ripple/subscription.hpp>
+#include <ripple/var.hpp>
