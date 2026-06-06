@@ -51,9 +51,49 @@ TEST_CASE("disposed effect no longer runs") {
   sub.dispose();
   CHECK(sub.disposed());
 
+  sub.dispose();
+  CHECK(sub.disposed());
+
   count.set(2);
   CHECK(runs == 1);
   CHECK(observed == 0);
+}
+
+TEST_CASE("effect switches dependencies after rerun") {
+  ripple::var<bool> use_a{true};
+  ripple::var<int> a{1};
+  ripple::var<int> b{10};
+
+  int runs = 0;
+  int observed = -1;
+
+  auto sub = ripple::effect([&] {
+    ++runs;
+    observed = use_a.get() ? a.get() : b.get();
+  });
+
+  CHECK(runs == 1);
+  CHECK(observed == 1);
+
+  b.set(20);
+  CHECK(runs == 1);
+  CHECK(observed == 1);
+
+  a.set(2);
+  CHECK(runs == 2);
+  CHECK(observed == 2);
+
+  use_a.set(false);
+  CHECK(runs == 3);
+  CHECK(observed == 20);
+
+  a.set(3);
+  CHECK(runs == 3);
+  CHECK(observed == 20);
+
+  b.set(30);
+  CHECK(runs == 4);
+  CHECK(observed == 30);
 }
 
 TEST_CASE("subscription disposes on destruction") {

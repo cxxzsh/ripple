@@ -43,4 +43,38 @@ TEST_CASE("batch can return a value") {
   CHECK(value == 42);
 }
 
+TEST_CASE("nested batch flushes after outer batch exits") {
+  ripple::var<int> first{0};
+  ripple::var<int> second{0};
+
+  int runs = 0;
+  int sum = 0;
+
+  auto sub = ripple::effect([&] {
+    ++runs;
+    sum = first.get() + second.get();
+  });
+
+  CHECK(runs == 1);
+  CHECK(sum == 0);
+
+  ripple::batch([&] {
+    first.set(1);
+
+    ripple::batch([&] {
+      second.set(2);
+      CHECK(runs == 1);
+      CHECK(sum == 0);
+    });
+
+    CHECK(runs == 1);
+    CHECK(sum == 0);
+
+    first.set(3);
+  });
+
+  CHECK(runs == 2);
+  CHECK(sum == 5);
+}
+
 }  // namespace
