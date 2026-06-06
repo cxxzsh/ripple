@@ -35,7 +35,7 @@ class var {
     dependency_.notify();
   }
 
-  template <class U = T, class = std::enable_if_t<std::is_assignable<T&, U&&>::value>>
+  template <class U, class = std::enable_if_t<std::is_constructible<T, U&&>::value>>
   var& operator=(U&& value) {
     set(T(std::forward<U>(value)));
     return *this;
