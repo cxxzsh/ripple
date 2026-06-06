@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.16)
 project(ripple VERSION 0.1.0 LANGUAGES CXX)
 
 add_library(ripple INTERFACE)
