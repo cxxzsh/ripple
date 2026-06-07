@@ -1,0 +1,10 @@
+// Copyright (c) 2026 ripple contributors
+// SPDX-License-Identifier: MIT
+
+#pragma once
+
+#define RIPPLE_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define RIPPLE_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define RIPPLE_VERSION_PATCH @PROJECT_VERSION_PATCH@
+
+#define RIPPLE_VERSION "@PROJECT_VERSION@"

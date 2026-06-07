@@ -31,3 +31,15 @@ jobs:
 
       - name: Test
         run: ctest --preset ci
+
+      - name: Install
+        run: cmake --install build/ci --prefix "${{ runner.temp }}/ripple-install"
+
+      - name: Configure package test
+        run: cmake -S tests/package -B build/package -G Ninja -DCMAKE_PREFIX_PATH="${{ runner.temp }}/ripple-install"
+
+      - name: Build package test
+        run: cmake --build build/package
+
+      - name: Run package test
+        run: ctest --test-dir build/package --output-on-failure

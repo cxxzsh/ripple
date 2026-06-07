@@ -1,5 +1,7 @@
 include(FetchContent)
 
+set(DOCTEST_NO_INSTALL ON CACHE BOOL "Skip doctest installation" FORCE)
+
 FetchContent_Declare(
   doctest
   GIT_REPOSITORY https://github.com/doctest/doctest.git
